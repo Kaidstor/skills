@@ -27,6 +27,7 @@ The architectural review is rendered as a single self-contained HTML file in the
     <main class="max-w-5xl mx-auto px-6 py-12 space-y-12">
       <header>...</header>
       <section id="candidates" class="space-y-10">...</section>
+      <section id="also-found">...</section>
       <section id="top-recommendation">...</section>
     </main>
   </body>
@@ -49,7 +50,7 @@ Each candidate is one `<article>`:
 - **Before / After diagram**: the centrepiece. Two columns, side by side. See patterns below.
 - **Problem**: one sentence. What hurts.
 - **Solution**: one sentence. What changes.
-- **Wins**: bullets, ≤6 words each. e.g. "Tests hit one interface", "Pricing logic stops leaking", "Delete 4 shallow wrappers".
+- **Wins**: bullets, one line each, no wrapping. e.g. "Tests hit one interface", "Pricing logic stops leaking", "Delete 4 shallow wrappers". (A word count is the wrong target here: the same bullet in Russian or German runs longer than in English and still reads as one line. Fit the line, not a number.)
 - **ADR callout** (if applicable): one line in an amber-tinted box.
 
 No paragraphs of explanation. If the diagram needs a paragraph to be understood, redraw the diagram.
@@ -99,6 +100,12 @@ Before: a tree of function calls rendered as nested boxes. After: the same tree 
 - Use `text-xs uppercase tracking-wider` for module labels inside diagrams, so they read as schematic, not as UI.
 - The only scripts are the Tailwind CDN and the Mermaid ESM import. The report is otherwise static: no app code, no interactivity beyond Mermaid's own rendering.
 
+## Also-found table
+
+Everything triage kept but didn't give a card to (see SKILL.md §2). One `<table>`, three columns: candidate name with its files underneath in `font-mono text-xs`, the measured fact behind it in one or two sentences, and the strength badge. No diagram, no wins bullets, no deletion test. A row is a placeholder for a card, not a shrunken one, so the numbers do the arguing: *"0 call sites outside its own spec"*, *"two paths disagree on which row is current"*.
+
+Skip the section entirely when everything fits in cards.
+
 ## Top recommendation section
 
 One larger card. Candidate name, one sentence on why, anchor link to its card. That's it.
@@ -106,6 +113,8 @@ One larger card. Candidate name, one sentence on why, anchor link to its card. T
 ## Tone
 
 Plain English, concise, but the architectural nouns and verbs come straight from the `/codebase-design` skill. Concision is not an excuse to drift.
+
+**Language.** Write the report in the language the project speaks: its `CONTEXT.md`, its commit messages, its code comments. The glossary terms below stay untranslated inside that prose, because a translated `seam` stops being the same word across reports. Same for badges (`Strong`, `Worth exploring`, `Speculative`), file paths and quoted code.
 
 **Use exactly:** module, interface, implementation, depth, deep, shallow, seam, adapter, leverage, locality.
 
